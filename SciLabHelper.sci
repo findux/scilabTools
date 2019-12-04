@@ -10,6 +10,51 @@ function uzunluk = uz(a)
     uzunluk = sqrt(sum(a^2))
 endfunction
 
+function m = RotPos2B(alpha,pos)
+    m = [cos(alpha) -sin(alpha) pos(1); sin(alpha) cos(alpha) pos(2) ; 0 0 1 ]
+endfunction
+
+/*
+--> RotPos2B(0,[3 3]) * [5 ; 4 ; 1]
+ ans  =
+
+   8.
+   7.
+   1.
+
+
+--> RotPos2B(%pi * 0.5 ,[3 3]) * [10 ; 0 ; 1]
+ ans  =
+
+   3.
+   13.
+   1.
+
+
+--> inv(RotPos2B(%pi * 0.25 ,[3 3])) * [6 ; 7 ;1]
+ ans  =
+
+   4.9497475
+   0.7071068
+   1.
+*/
+
+function m = Rx(alpha)
+    m = [1 0 0 0 ; 
+    0 cos(alpha) -sin(alpha) 0;
+    0 sin(alpha) cos(alpha) 0;
+    0 0 0 1]
+endfunction
+
+function    m = Ry(betha)
+    m = [cos(betha) 0 sin(betha) 0;
+    0 1 0 0;
+    -sin(betha) 0 cos(betha) 0;
+    0 0 0 1]    
+endfunction
+    
+
+
 /*
 matrix vector tanımlama 
 
