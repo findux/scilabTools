@@ -124,3 +124,78 @@ m_storage = {m_data={array=0x0000021633159250 {14.000000000000172, 739.000000000
 
 
 */
+
+/* Arbitrary axis algorithm */
+function [Ax, Ay] = arbitrary_axis_algorithm(N)
+    Wy = [0; 1; 0];
+    Wz = [0; 0; 1];
+
+    if (abs(N(1)) < 1/64) & (abs(N(2)) < 1/64)
+        Ax = cross(Wy, N);
+    else
+        Ax = cross(Wz, N);
+    end
+
+    Ax = Ax / norm(Ax);
+    Ay = cross(N, Ax);
+    Ay = Ay / norm(Ay);
+endfunction
+
+/*
+N = [0.5; 0.3; 0.8];
+[Ax, Ay] = arbitrary_axis_algorithm(N);
+
+disp("Ax: ");
+disp(Ax);
+disp("Ay: ");
+disp(Ay);
+
+
+//another example
+//keyfi bir 210 vecötrü belirleniyor
+--> N210 = [-0.423999; 0.866025; -0.264999]; 
+//210 vectörüne göre xdir ydir vektörleri hesaplanıyor arbitrary axis algorthim e göre
+--> [Ax, Ay] = arbitrary_axis_algorithm(N210)
+ Ay  = 
+
+  -0.1165254
+   0.238005
+   0.9642486
+
+ Ax  = 
+
+  -0.898135
+  -0.4397198
+   0.
+
+//verilenlerden bir exen takımı oluşturuluyor
+--> a = [Ax(1) Ay(1) N210(1) 0;Ax(2) Ay(2) N210(2) 0;Ax(3) Ay(3) N210(3) 0;0 0 0 1]
+ a  = 
+
+  -0.898135   -0.1165254  -0.423999   0.
+  -0.4397198   0.238005    0.866025   0.
+   0.          0.9642486  -0.264999   0.
+   0.          0.          0.         1.
+
+
+//Z de öndürülmüş başka bir matrix belirleniyor
+--> rot = Rz(-0.496113)
+ rot  = 
+
+   0.8794395   0.4760108   0.   0.
+  -0.4760108   0.8794395   0.   0.
+   0.          0.          1.   0.
+   0.          0.          0.   1.
+   
+   //a ile rot çarpıpmı ile döndürülmüş eksen takımı elde ediliyor.
+--> a*rot
+ ans  =
+
+  -0.734388   -0.5299989  -0.423999   0.
+  -0.4999999  -0.0000004   0.866025   0.
+  -0.4589927   0.8479983  -0.264999   0.
+   0.          0.          0.         1.
+
+
+
+*/
