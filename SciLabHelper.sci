@@ -1,3 +1,33 @@
+/*matrix tanımlama işlemi
+--> M = eye(4,4)
+ M  = 
+
+   1.   0.   0.   0.
+   0.   1.   0.   0.
+   0.   0.   1.   0.
+   0.   0.   0.   1.
+
+
+--> M(1,4) = 100
+ M  = 
+
+   1.   0.   0.   100.
+   0.   1.   0.   0.  
+   0.   0.   1.   0.  
+   0.   0.   0.   1.  
+
+
+--> M(13) = 50
+ M  = 
+
+   1.   0.   0.   50.
+   0.   1.   0.   0. 
+   0.   0.   1.   0. 
+   0.   0.   0.   1. 
+
+*/
+
+
 function hassas()
     format('v',20);
 endfunction
@@ -60,6 +90,35 @@ function m =Rz(theta)
     0 0 0 1]
 endfunction
     
+    function m=Tz2D(theta)
+        m = [cos(theta) -sin(theta) 0;
+            sin(theta) cos(theta) 0;
+            0 0 1]
+    endfunction
+    
+    function m=Tz2Dd(mydegree)
+        m = [cosd(mydegree) -sind(mydegree) 0;
+            sind(mydegree) cosd(mydegree) 0;
+            0 0 1]
+    endfunction
+    
+    /*
+    
+--> Tz2D(0)
+ ans  =
+
+   1.   0.   0.
+   0.   1.   0.
+   0.   0.   1.
+
+
+--> Tz2D(45) * [10;0;1]
+ ans  =
+
+   5.2532199
+   8.5090352
+   1.
+    */
 
 
 /*
