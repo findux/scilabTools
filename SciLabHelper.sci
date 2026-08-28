@@ -263,3 +263,75 @@ disp(Ay);
 
 
 */
+
+/* sembolic işlemler 
+
+https://stackoverflow.com/questions/46864009/scilab-symbolic-matrix-multiplication
+Here is an example of it's output. Test code:
+
+A = [1 2; 3 4];
+B = [5 6; 7 8];
+C = [9 0; 1 2];
+disp(A*B*C)
+As = string(A);
+Bs = string(B);
+Cs = string(C);
+disp(matrixMulf(As,addP(matrixMulf(Bs, Cs))))
+Console output:
+
+   193.   44. 
+   437.   100.
+
+!1*(5*9+6*1)+2*(7*9+8*1)  1*(5*0+6*2)+2*(7*0+8*2)  !
+!                                                  !
+!3*(5*9+6*1)+4*(7*9+8*1)  3*(5*0+6*2)+4*(7*0+8*2)  !
+*/
+
+function s = scaProd(a,b)
+    //escalar product of two vectors
+    //using recursion
+
+    if (a == [] | b == []) then
+       s = ""
+
+    elseif (max(size(a)) ~= max(size(b))) | ...
+           (min(size(a)) ~= min(size(b))) | ...
+           (min(size(a)) ~= 1) then
+        error("vectorMulf: Wrong dimensions")
+
+    else
+        s = addf( mulf(a(1), b(1)) , scaProd(a(2:$), b(2:$)) )
+
+    end
+endfunction
+
+function s = matrixMulf(a,b)
+    //matrix multiplication
+
+    acols = size(a,'c');
+    brows = size(b,'r');
+    if acols ~= brows then
+        error("matrixMulf: Wrong dimensions")
+    end
+
+    arows = size(a,'r');
+    bcols = size(b,'c');
+    s = string(zeros(arows,bcols));
+
+    for i = 1 : arows
+        for j = 1 : bcols
+            s(i,j) = scaProd(a(i,:),b(:,j)');
+        end
+    end
+endfunction
+
+function s = addP(a)
+    //encolses each element of a in a pair of parenthesis
+    s = string(zeros(a));
+
+    for i = 1 : size(a,'r')
+        for j = 1 : size(a,'c')
+            s(i,j) = "(" + a(i,j) + ")"
+        end
+    end
+endfunction
