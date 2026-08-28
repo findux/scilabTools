@@ -200,6 +200,11 @@ function [Ax, Ay] = arbitrary_axis_algorithm(N)
     Ay = Ay / norm(Ay);
 endfunction
 
+function [M] = createMatrixWithArbitraryAxis(ZZ,orj)
+    [XX, YY] = arbitrary_axis_algorithm(ZZ);
+    M = [XX(1) YY(1) ZZ(1) orj(1);XX(2) YY(2) ZZ(2) orj(2);XX(3) YY(3) ZZ(3) orj(3);0 0 0 1]
+endfunction
+
 /*
 N = [0.5; 0.3; 0.8];
 [Ax, Ay] = arbitrary_axis_algorithm(N);
